@@ -42,8 +42,6 @@ NAVBAR /\
 
 <div sec:authorize="hasAuthority('Aluno')">
 
-
-
     <div th:if="${checagem} != 0 ">
 
         SEUS CERTIFICADOS:
@@ -53,10 +51,6 @@ NAVBAR /\
             <a th:href="@{'/cursos/' + ${curso.id} + '/certificado'}"><h5 th:text="${curso.fk_curso.titulo}" >Título</h5></a>
         </div>
     </div>
-
-
-
-
 </div>
 
 </body>

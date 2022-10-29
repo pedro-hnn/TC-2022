@@ -87,6 +87,7 @@ public class CursosController {
         if(service.listAll().isEmpty()){
             model.addAttribute("vazio",1);
         }else{
+            model.addAttribute("vazio",0);
             Cursos c = service.get(id);
             List<Aulas> listaAulas = serviceA.findByCurso(id);
             model.addAttribute("Curso",c);
