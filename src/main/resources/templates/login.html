@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<br>
+<hr>
+<br>
+NAVBAR \/
+<br>
+
+<a th:href="@{/registro}">Register</a>
+<a th:href="@{/login}">Login</a>
+
+<br>
+NAVBAR /\
+<br>
+<hr>
+<br>
+
+
+<form name="login" th:action="@{/login}" method="post">
+    <div th:if="${param.error}">
+        Email ou Senha inválidos!
+    </div>
+    <div th:if="${param.registrado}">
+        Registro realizado com sucesso!
+    </div>
+
+
+    email:
+    <input id="username" type="text" name="email" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" >
+    <br>
+    senha:
+    <input id="password" type="password" name="password" required oninvalid="this.setCustomValidity('Preencha o campo de Senha!')" oninput="setCustomValidity('')">
+    <br>
+    <input type="submit" value="Entrar na plataforma">
+</form>
+
+</body>
+</html>

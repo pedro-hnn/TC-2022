@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar nova Aula</title>
+</head>
+<body>
+
+<br>
+<hr>
+<br>
+NAVBAR \/
+<br>
+<div sec:authorize="hasAuthority('Administrador')">
+    <div class="navbar-admin">
+        <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
+        <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
+        <a th:href="@{/admin/users}" >Lista de Usuários</a>
+
+        <a th:href="@{/perfil}">[[${#request.userPrincipal.principal.username}]]</a>
+
+        <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+    </div>
+</div>
+<br>
+NAVBAR /\
+<br>
+<hr>
+<br>
+
+<form action="#" th:action="@{/admin/salvar-aula}" th:object="${Aulas}" method="post" id="aula-form" enctype="multipart/form-data">
+    <input type="hidden" form="aula-form" th:field="*{id}" />
+    titulo da aula
+    <input type="text" form="aula-form" th:field="*{titulo}" placeholder="Título" required oninvalid="this.setCustomValidity('Preencha o título da Aula!')" oninput="setCustomValidity('')"/>
+    <br>
+    <br>
+    <br>
+    descrição da aula
+    <textarea form="aula-form" th:field="*{descricao}" placeholder="Digite sua descrição aqui" rows="4" required oninvalid="this.setCustomValidity('Preencha a descrição da Aula!')" oninput="setCustomValidity('')"></textarea
+    >
+    <br>
+    <br>
+    <br>
+    <br>
+    link do vídeo da aula
+    <input type="file" name="video_aula" accept="video/*" required oninvalid="this.setCustomValidity('Adicione o vídeo da Aula!')" oninput="setCustomValidity('')">
+    <br>
+    <br>
+    <br>
+    <br>
+    Selecione o curso da aula
+    <select th:field="*{fk_curso}" form="aula-form" >
+        <option th:each="curso : ${listaCursos}" th:value="${curso.id}"><p th:text="${curso.titulo}"></p></option>
+    </select>
+    <br>
+    <br>
+    <br>
+    <br>
+    <input type="submit" value="Salvar Aula" >
+
+</form>
+
+</body>
+</html>

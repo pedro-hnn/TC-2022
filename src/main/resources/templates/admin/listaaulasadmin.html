@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Aulas da Plataforma</title>
+</head>
+<body>
+
+NAVBAR \/
+<br>
+<div sec:authorize="hasAuthority('Administrador')">
+  <div class="navbar-admin">
+    <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
+    <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
+    <a th:href="@{/admin/users}" >Lista de Usuários</a>
+
+    <a th:href="@{/perfil}">[[${#request.userPrincipal.principal.username}]]</a>
+
+    <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+  </div>
+</div>
+<br>
+NAVBAR /\
+
+
+<div th:if="${vazio == 1}">
+  Não há nenhum curso cadastrado na plataforma. Cadastre um curso antes de cadastrar uma nova aula!
+</div>
+
+<div th:if="${vazio == 0}">
+  <a th:href="@{/admin/nova-aula}">Adicionar nova Aula</a>
+</div>
+
+<div th:if="${param.save}">
+  Aula salva com sucesso!
+</div>
+<div th:if="${param.delete}">
+  Aula deletada com sucesso!
+</div>
+<div th:if="${param.saveerror}">
+  Houve algum problema, não foi possível salvar Aula!
+</div>
+<div th:if="${param.deleteerror}">
+  Houve algum problema, não foi possível deletar Aula!
+</div>
+
+
+
+<div th:each="aula : ${listaAulas}">
+  <div>
+    <div>
+      <a th:href="@{'/cursos/' + ${aula.fk_curso.id} + '/' + ${aula.id}}" >página da aula</a>
+      <a th:href="@{'/admin/editar-aula/' + ${aula.id}}" >editar aula</a>
+      <a th:href="@{'/admin/deletar-aula/' + ${aula.id}}" onclick="return confirm('Tem certeza que deseja deletar essa Aula?')" >deletar aula</a>
+    </div>
+    TÍTULO DA AULA: <p th:text="${aula.titulo}" >Título</p>
+    CURSO RELACIONADO: <a th:href="@{'/cursos/' + ${aula.fk_curso.id}}" th:text="${aula.fk_curso.titulo}" >Título</a>
+  </div>
+</div>
+
+
+
+</body>
+</html>

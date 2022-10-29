@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registre-se</title>
+</head>
+<body>
+
+<br>
+<hr>
+<br>
+NAVBAR \/
+<br>
+
+<a th:href="@{/registro}">Register</a>
+<a th:href="@{/login}">Login</a>
+
+<br>
+NAVBAR /\
+<br>
+<hr>
+<br>
+
+<div th:if="${param.emailinvalido}">
+    Email já cadastrado na plataforma!
+</div>
+
+<form th:action="@{/salvar-registro}" th:object="${Usuario}" method="post">
+    EMAIL = <input type="email" th:field="*{email}" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" />
+    SENHA = <input type="password" th:field="*{senha}" required oninvalid="this.setCustomValidity('Preencha o campo de Senha!')" oninput="setCustomValidity('')"/>
+    USERNAME = <input type="text" th:field="*{username}" required oninvalid="this.setCustomValidity('Preencha o campo de Username!')" oninput="setCustomValidity('')"/>
+
+    <button type="submit" >Se registrar</button>
+</form>
+
+</body>
+</html>

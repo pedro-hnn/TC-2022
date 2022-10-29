@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Usuários da Plataforma</title>
+</head>
+<body>
+
+<br>
+<hr>
+<br>
+NAVBAR \/
+<br>
+<div sec:authorize="hasAuthority('Administrador')">
+    <div class="navbar-admin">
+        <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
+        <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
+        <a th:href="@{/admin/users}" >Lista de Usuários</a>
+
+        <a th:href="@{/perfil}">[[${#request.userPrincipal.principal.username}]]</a>
+
+        <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+    </div>
+</div>
+<br>
+NAVBAR /\
+<br>
+<hr>
+<br>
+
+<a th:href="@{'/admin/novo-usuario'}">Adicionar novo usuario</a>
+<br>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<br>
+
+<div th:if="${param.save}">
+    Usuário salvo com sucesso!
+</div>
+<div th:if="${param.delete}">
+    Usuário deletado com sucesso!
+</div>
+<div th:if="${param.saveerror}">
+    Houve algum problema, não foi possível salvar Usuário!
+</div>
+<div th:if="${param.deleteerror}">
+    Houve algum problema, não foi possível deletar Usuário!
+</div>
+
+
+
+<table>
+    <thead>
+    <tr>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Função</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user: ${listaUsuarios}">
+        <div th:if="${#request.userPrincipal.principal.id} != ${user.id}">
+        <td th:text="${user.email}">email</td>
+        <td th:text="${user.username}">username</td>
+        <td th:text="${user.fk_funcao.nome}">funcao</td>
+        <td><a th:href="@{'/admin/users/' + ${user.id}}">EDITAR</a></td>
+        <td><a th:href="@{'/admin/deletar-usuario/' + ${user.id}}" onclick="return confirm('Tem certeza que deseja deletar esse Usuário?')">DELETAR</a></td>
+        </div>
+    </tr>
+    </tbody>
+</table>
+
+
+</body>
+</html>

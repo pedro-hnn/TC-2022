@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Seu Perfil</title>
+</head>
+<body>
+
+<br>
+<hr>
+<br>
+NAVBAR \/
+<br>
+
+<div sec:authorize="hasAuthority('Administrador')">
+    <div class="navbar-admin">
+        <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
+        <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
+        <a th:href="@{/admin/users}" >Lista de Usuários</a>
+
+        <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+    </div>
+</div>
+
+<div sec:authorize="hasAuthority('Aluno')">
+    <div class="navbar-aluno">
+        <a th:href="@{/aluno/cursos}" >Lista de Cursos</a>
+        <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+    </div>
+</div>
+
+<br>
+NAVBAR /\
+<br>
+<hr>
+<br>
+
+<a th:href="@{'/editar-perfil/'+ ${#request.userPrincipal.principal.id}}">Editar Perfil</a>
+
+<p>Username: <span>[[${#request.userPrincipal.principal.username}]]</span></p>
+<p>Email: <span>[[${#request.userPrincipal.principal.email}]]</span></p>
+
+<div sec:authorize="hasAuthority('Aluno')">
+
+
+
+    <div th:if="${checagem} != 0 ">
+
+        SEUS CERTIFICADOS:
+        <div th:each="curso : ${listaCursosConcluidos}">
+            <br>
+            <hr>
+            <a th:href="@{'/cursos/' + ${curso.id} + '/certificado'}"><h5 th:text="${curso.fk_curso.titulo}" >Título</h5></a>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+</body>
+</html>

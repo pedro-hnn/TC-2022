@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div th:each="curso : ${Curso}">
+        <div th:style="'background-image:url('+ @{${curso.path_imagem_certificado}}">
+            <div th:each="user : ${Usuario}">
+                <p>Certificação do Curso <span th:text="${curso.titulo}"></span></p>
+                <br>
+                <p th:text="${curso.texto_certificado}">texto certificado</p>
+                <br><br><br>
+                <p><span th:text="${user.username}"></span> - <span th:text="${user.email}"></span></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

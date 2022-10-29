@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar novo Curso</title>
+</head>
+<body>
+
+<br>
+<hr>
+<br>
+NAVBAR \/
+<br>
+<div sec:authorize="hasAuthority('Administrador')">
+    <div class="navbar-admin">
+        <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
+        <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
+        <a th:href="@{/admin/users}" >Lista de Usuários</a>
+
+        <a th:href="@{/perfil}">[[${#request.userPrincipal.principal.username}]]</a>
+
+        <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+    </div>
+</div>
+<br>
+NAVBAR /\
+<br>
+<hr>
+<br>
+
+
+<form action="#" th:action="@{/admin/salvar-curso}" th:object="${Cursos}" method="post" id="curso-form" enctype="multipart/form-data">
+    <input type="hidden" form="curso-form" th:field="*{id}" />
+    titulo do curso
+    <input type="text" form="curso-form" th:field="*{titulo}" placeholder="Título" required oninvalid="this.setCustomValidity('Preencha o título do Curso!')" oninput="setCustomValidity('')"/>
+    <br>
+    <br>
+    <br>
+    descrição do curso
+    <textarea form="curso-form" th:field="*{descricao}" placeholder="Digite sua descrição aqui" rows="4" required oninvalid="this.setCustomValidity('Preencha a descrição do Curso!')" oninput="setCustomValidity('')"></textarea
+    >
+    <br>
+    <br>
+    <br>
+    <br>
+    capa do curso
+    <input type="file" name="capa_curso" accept="image/*" required oninvalid="this.setCustomValidity('Adicione a capa do Curso!')" oninput="setCustomValidity('')">
+    <br>
+    <br>
+    <br>
+    <br>
+    TEXTO DO CERTIFICADO AQUI
+    <textarea form="curso-form" th:field="*{texto_certificado}" placeholder="Digite o texto do certificado aqui" rows="4" required oninvalid="this.setCustomValidity('Preencha o texto que aparecerá no certificado do Curso!')" oninput="setCustomValidity('')"></textarea
+    >
+    <br>
+    <br>
+    <br>
+    <br>
+    LINK DA IMAGEM DO CERTIFICADO AQUI
+    <input type="file" name="fundo_certificado" accept="image/*" required oninvalid="this.setCustomValidity('Adicione o fundo do certificado do Curso!')" oninput="setCustomValidity('')">
+    <br>
+    <br>
+    <input type="submit" value="Salvar Curso" >
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Aula</title>
+</head>
+<body>
+
+<br>
+<hr>
+<br>
+NAVBAR \/
+<br>
+<div sec:authorize="hasAuthority('Aluno')">
+  <div class="navbar-aluno">
+    <a th:href="@{/aluno/cursos}" >Lista de Cursos</a>
+    <a th:href="@{/perfil}" >Certificados</a>
+
+    <a th:href="@{/perfil}">[[${#request.userPrincipal.principal.username}]]</a>
+
+    <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+  </div>
+</div>
+<div sec:authorize="hasAuthority('Administrador')">
+  <div class="navbar-admin">
+    <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
+    <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
+    <a th:href="@{/admin/users}" >Lista de Usuários</a>
+
+    <a th:href="@{/perfil}">[[${#request.userPrincipal.principal.username}]]</a>
+
+    <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+  </div>
+</div>
+<br>
+NAVBAR /\
+<br>
+<hr>
+
+<div th:each="aula : ${Aula}">
+  <div>
+    <a th:href="@{'/cursos/' + ${aula.fk_curso.id}}">Voltar ao Curso</a>
+    <h5 th:text="${aula.titulo}" >Título</h5>
+
+    <video controls>
+      <source th:src="@{${aula.path_video}}" type="video/mp4">
+      <source th:src="@{${aula.path_video}}" type="video/ogg">
+      <source th:src="@{${aula.path_video}}" type="video/webm">
+      Seu navegador não suporta esse tipo de vídeo.
+    </video>
+
+    <p th:text="${aula.descricao}" >Descrição</p>
+  </div>
+</div>
+
+<br>
+<hr>
+
+AULAS DESSE CURSO:
+<div th:each="aula : ${AulasConectadas}">
+  <a th:href="@{'/cursos/' + ${aula.fk_curso.id} + '/' + ${aula.id}}" th:text="${aula.titulo}" >Título</a><br>
+</div>
+
+</body>
+</html>
