@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edição de Usuário</title>
+</head>
+<body>
+
+
+<br>
+<hr>
+<br>
+NAVBAR \/
+<br>
+<div sec:authorize="hasAuthority('Administrador')">
+    <div class="navbar-admin">
+        <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
+        <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
+        <a th:href="@{/admin/users}" >Lista de Usuários</a>
+
+        <a th:href="@{/perfil}">[[${#request.userPrincipal.principal.username}]]</a>
+
+        <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+    </div>
+</div>
+<br>
+NAVBAR /\
+<br>
+<hr>
+<br>
+
+<div th:if="${param.emailinvalido}">
+    Email já cadastrado na plataforma!
+</div>
+
+
+<form th:action="@{/salvar-edicao-usuario}" th:object="${Usuario}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    EMAIL = <input type="email" th:field="*{email}"/>
+    USERNAME = <input type="text" th:field="*{username}"/>
+    SENHA = <input type="password" th:field="*{senha}"/>
+    <select th:field="*{fk_funcao}">
+        <option th:each="funcao : ${listaFuncoes}" th:value="${funcao.id}"><p th:text="${funcao.nome}"></p></option>
+    </select>
+
+    <button type="submit">Atualizar Perfil</button>
+</form>
+
+</div>
+
+</body>
+</html>

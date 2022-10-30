@@ -28,7 +28,11 @@ NAVBAR /\
 <hr>
 <br>
 
-<form th:action="@{/editar-registro}" th:object="${Usuario}" method="post">
+<div th:if="${param.emailinvalido}">
+  Email já cadastrado na plataforma!
+</div>
+
+<form th:action="@{/salvar-usuario}" th:object="${Usuario}" method="post">
   EMAIL = <input type="email" th:field="*{email}" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" />
   SENHA = <input type="password" th:field="*{senha}" required oninvalid="this.setCustomValidity('Preencha o campo de Senha!')" oninput="setCustomValidity('')" />
   USERNAME = <input type="text" th:field="*{username}" required oninvalid="this.setCustomValidity('Preencha o campo de Username!')" oninput="setCustomValidity('')"/>
@@ -37,7 +41,7 @@ NAVBAR /\
     <option th:each="funcao : ${listaFuncoes}" th:value="${funcao.id}"><p th:text="${funcao.nome}"></p></option>
   </select>
 
-  <button type="submit" >Registrar Usuário</button>
+  <button type="submit" >Salvar Usuário</button>
 </form>
 
 </body>

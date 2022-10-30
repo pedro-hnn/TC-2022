@@ -6,31 +6,30 @@
 </head>
 <body>
 
+NAVBAR
 <br>
-<hr>
 <br>
-NAVBAR \/
-<br>
-
 <a th:href="@{/registro}">Register</a>
 <a th:href="@{/login}">Login</a>
+<br>
+<br>
+NAVBAR
+<br>
 
-<br>
-NAVBAR /\
-<br>
-<hr>
-<br>
+
+<div th:if="${param.error}">
+    Email ou Senha inválidos!
+</div>
+<div th:if="${param.registrado}">
+    Registro realizado com sucesso!
+</div>
+<div th:if="${param.editado}">
+    Edição de Perfil feita com sucesso! Entre novamente na plataforma!
+</div>
+
 
 
 <form name="login" th:action="@{/login}" method="post">
-    <div th:if="${param.error}">
-        Email ou Senha inválidos!
-    </div>
-    <div th:if="${param.registrado}">
-        Registro realizado com sucesso!
-    </div>
-
-
     email:
     <input id="username" type="text" name="email" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" >
     <br>

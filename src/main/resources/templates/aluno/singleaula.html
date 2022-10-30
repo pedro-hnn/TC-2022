@@ -43,8 +43,6 @@ NAVBAR /\
     <h5 th:text="${aula.titulo}" >Título</h5>
 
     <video controls>
-      <source th:src="@{${aula.path_video}}" type="video/mp4">
-      <source th:src="@{${aula.path_video}}" type="video/ogg">
       <source th:src="@{${aula.path_video}}" type="video/webm">
       Seu navegador não suporta esse tipo de vídeo.
     </video>

@@ -6,19 +6,14 @@
 </head>
 <body>
 
+NAVBAR
 <br>
-<hr>
 <br>
-NAVBAR \/
-<br>
-
 <a th:href="@{/registro}">Register</a>
 <a th:href="@{/login}">Login</a>
-
 <br>
-NAVBAR /\
 <br>
-<hr>
+NAVBAR
 <br>
 
 <div th:if="${param.emailinvalido}">
@@ -26,9 +21,14 @@ NAVBAR /\
 </div>
 
 <form th:action="@{/salvar-registro}" th:object="${Usuario}" method="post">
-    EMAIL = <input type="email" th:field="*{email}" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" />
-    SENHA = <input type="password" th:field="*{senha}" required oninvalid="this.setCustomValidity('Preencha o campo de Senha!')" oninput="setCustomValidity('')"/>
-    USERNAME = <input type="text" th:field="*{username}" required oninvalid="this.setCustomValidity('Preencha o campo de Username!')" oninput="setCustomValidity('')"/>
+    email:
+    <input type="email" th:field="*{email}" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" />
+    <br>
+    username:
+    <input type="text" th:field="*{username}" required oninvalid="this.setCustomValidity('Preencha o campo de Username!')" oninput="setCustomValidity('')"/>
+    <br>
+    senha:
+    <input type="password" th:field="*{senha}" required oninvalid="this.setCustomValidity('Preencha o campo de Senha!')" oninput="setCustomValidity('')"/>
 
     <button type="submit" >Se registrar</button>
 </form>

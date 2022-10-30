@@ -33,9 +33,6 @@ public class CursosController {
     @Autowired
     private UsuarioCursoService serviceUC;
 
-    public static String uploadDirectoryImages = System.getProperty("user.dir")+ "/src/main/resources/media/images";
-
-
     //listagem
 
     //listagem público
@@ -115,14 +112,19 @@ public class CursosController {
     public String saveCurso(@ModelAttribute("Cursos") Cursos c, @RequestParam("capa_curso") MultipartFile capa_curso, @RequestParam("fundo_certificado") MultipartFile fundo_certificado ){
 
         try {
-            Path CapaCursoCaminho = Paths.get(uploadDirectoryImages, capa_curso.getOriginalFilename());
-            Path FundoCertificadoCaminho = Paths.get(uploadDirectoryImages, fundo_certificado.getOriginalFilename());
 
-            Files.write(CapaCursoCaminho, capa_curso.getBytes());
-            Files.write(FundoCertificadoCaminho, fundo_certificado.getBytes());
+            Path caminhoAbsoluto = Paths.get(".").toAbsolutePath();
+            String caminho = caminhoAbsoluto+"/src/main/resources/static/images/";
 
-            c.setPath_capa("file://" + CapaCursoCaminho.toString().replace("\\", "/"));
-            c.setPath_imagem_certificado("file://" + FundoCertificadoCaminho.toString().replace("\\", "/"));
+            Path capaCursoCaminho = Paths.get(caminho, capa_curso.getOriginalFilename());
+            Path fundoCertificadoCaminho = Paths.get(caminho, fundo_certificado.getOriginalFilename());
+
+            Files.write(capaCursoCaminho, capa_curso.getBytes());
+            Files.write(fundoCertificadoCaminho, fundo_certificado.getBytes());
+
+
+            c.setPath_capa("/images/"+capa_curso.getOriginalFilename());
+            c.setPath_imagem_certificado("/images/"+fundo_certificado.getOriginalFilename());
 
             service.save(c);
 

@@ -35,8 +35,6 @@ public class AulasController {
     @Autowired
     private UsuarioCursoService serviceUC;
 
-    public static String uploadDirectoryVideos = System.getProperty("user.dir")+ "/src/main/resources/media/videos";
-
     //listagem
     @GetMapping("/admin/aulas")
     public String aulasAdmin(Model m){
@@ -111,10 +109,14 @@ public class AulasController {
     @RequestMapping(value = "/admin/salvar-aula", method = RequestMethod.POST)
     public String saveAula(@ModelAttribute("Aulas") Aulas a, @RequestParam("video_aula") MultipartFile video_aula) {
         try{
-            Path VideoAulaCaminho = Paths.get(uploadDirectoryVideos, video_aula.getOriginalFilename());
-            Files.write(VideoAulaCaminho,video_aula.getBytes());
+            Path caminhoAbsoluto = Paths.get(".").toAbsolutePath();
+            String caminho = caminhoAbsoluto+"/src/main/resources/static/videos/";
 
-            a.setPath_video("file://"+VideoAulaCaminho.toString().replace("\\","/"));
+            Path videoAulaCaminho = Paths.get(caminho, video_aula.getOriginalFilename());
+
+            Files.write(videoAulaCaminho,video_aula.getBytes());
+
+            a.setPath_video("/videos/"+video_aula.getOriginalFilename());
 
             serviceA.save(a);
             return "redirect:/admin/aulas?save";

@@ -29,36 +29,23 @@ public class Controller {
     @Autowired
     private UsuarioCursoService serviceUC;
 
+    //user não logado
+
+    //index
     @GetMapping("/")
     public String index(){
         service.iniciarPrograma();
         return "index";
     }
 
+    //login
     @GetMapping("/login")
     public String login(Model model){
 
         return "login";
     }
 
-    @GetMapping("/admin/novo-usuario")
-    public String adicionarUsuario(Model m){
-        m.addAttribute("Usuario",new Usuarios());
-        List<Funcoes> listaFuncoes = funcoesRepo.findAll();
-        m.addAttribute("listaFuncoes", listaFuncoes);
-        return "admin/novousuario";
-    }
-
-    @RequestMapping("/admin/deletar-usuario/{id}")
-    public String deleteUser(@PathVariable(name = "id") int id){
-        try{
-            service.delete(id);
-            return "redirect:/admin/users?delete";
-        }catch(Exception e){
-            return "redirect:/admin/users?deleteerror";
-        }
-    }
-
+    //registro novo usuário (ALUNO)
     @GetMapping("/registro")
     public String registroAluno(Model model){
         model.addAttribute("Usuario", new Usuarios());
@@ -66,6 +53,7 @@ public class Controller {
         return "registroaluno";
     }
 
+    //salvar registro novo usuário (ALUNO)
     @PostMapping("/salvar-registro")
     public String saveRegistro(Usuarios user) {
 
@@ -77,19 +65,9 @@ public class Controller {
         }
     }
 
+    //admin
 
-
-    @PostMapping("/editar-registro")
-    public String editRegistroAdmin(Usuarios user) {
-        try {
-            service.save(user);
-            return "redirect:/admin/users?save";
-        }catch (Exception e){
-            return "redirect:/admin/users?saveerror";
-        }
-
-    }
-
+    //listagem usuarios
     @GetMapping("/admin/users")
     public String usuarios(Model model) {
         List<Usuarios> listaUsuarios = service.listAll();
@@ -98,6 +76,43 @@ public class Controller {
         return "admin/listausuarios";
     }
 
+    //adição novo usuario
+    @GetMapping("/admin/novo-usuario")
+    public String adicionarUsuario(Model m){
+        m.addAttribute("Usuario",new Usuarios());
+        List<Funcoes> listaFuncoes = funcoesRepo.findAll();
+        m.addAttribute("listaFuncoes", listaFuncoes);
+        return "admin/criacaousuario";
+    }
+
+    //salvar novo usuário
+    @PostMapping("/salvar-usuario")
+    public String SalvarRegistroAdmin(Usuarios user) {
+        Usuarios procuraEmail = service.findByEmail(user.getEmail());
+        try {
+            if(procuraEmail != null){
+                return "redirect:/admin/novo-usuario?emailinvalido";
+            }else{
+                service.save(user);
+                return "redirect:/admin/users?save";
+            }
+        }catch (Exception e){
+            return "redirect:/admin/users?saveerror";
+        }
+    }
+
+    //deletar usuário
+    @RequestMapping("/admin/deletar-usuario/{id}")
+    public String deleteUser(@PathVariable(name = "id") int id){
+        try{
+            service.delete(id);
+            return "redirect:/admin/users?delete";
+        }catch(Exception e){
+            return "redirect:/admin/users?deleteerror";
+        }
+    }
+
+    //editar usuário
     @GetMapping("/admin/users/{id}")
     public String editarUsuario(@PathVariable("id") Long id, Model model) {
         Usuarios user = service.get(id);
@@ -105,9 +120,30 @@ public class Controller {
         List<Funcoes> listaFuncoes = funcoesRepo.findAll();
         model.addAttribute("listaFuncoes", listaFuncoes);
 
-        return "admin/editarusuario";
+        return "admin/edicaousuario";
     }
 
+    //salvar edição usuário
+    @PostMapping("/salvar-edicao-usuario")
+    public String salvarEditarUsuario(Usuarios user) {
+
+        Usuarios procuraEmail = service.findByEmail(user.getEmail());
+        try {
+            if(procuraEmail != null & procuraEmail.getId() != user.getId()){
+                return "redirect:/admin/novo-usuario?emailinvalido";
+            }else{
+                service.save(user);
+                return "redirect:/admin/users?save";
+            }
+        }catch (Exception e){
+            return "redirect:/admin/users?saveerror";
+        }
+
+    }
+
+    //ADMIN e ALUNO
+
+    //perfil
     @RequestMapping("/perfil")
     public String viewUsuario(Model model){
 
@@ -124,6 +160,7 @@ public class Controller {
         return "perfil";
     }
 
+    //editar perfil
     @GetMapping("/editar-perfil/{id}")
     public String editarPerfil(@PathVariable("id") Long id, Model model) {
         Usuarios user = service.get(id);
@@ -132,6 +169,24 @@ public class Controller {
         model.addAttribute("listaFuncoes", listaFuncoes);
 
         return "editarperfil";
+    }
+
+    //salvar edição
+    @PostMapping("/salvar-edicao")
+    public String saveEdicaoPerfil(Usuarios user) {
+
+        Usuarios user_logado = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+        Usuarios procuraEmail = service.findByEmail(user.getEmail());
+
+        if(procuraEmail != null & procuraEmail.getId() != user_logado.getId()){
+            return "redirect:/editar-perfil/"+user.getId()+"?emailinvalido";
+        }else{
+            String funcao = user_logado.getFk_funcao().getNome();
+            user.setFk_funcao(user_logado.getFk_funcao());
+            service.save(user);
+
+            return "redirect:/login?editado";
+        }
     }
 
 }

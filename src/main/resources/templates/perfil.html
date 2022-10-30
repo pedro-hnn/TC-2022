@@ -6,19 +6,15 @@
 </head>
 <body>
 
-<br>
-<hr>
-<br>
-NAVBAR \/
-<br>
-
 <div sec:authorize="hasAuthority('Administrador')">
     <div class="navbar-admin">
         <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
         <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
         <a th:href="@{/admin/users}" >Lista de Usuários</a>
 
-        <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sair da Plataforma" />
+        </form>
     </div>
 </div>
 
@@ -29,11 +25,7 @@ NAVBAR \/
     </div>
 </div>
 
-<br>
-NAVBAR /\
-<br>
-<hr>
-<br>
+
 
 <a th:href="@{'/editar-perfil/'+ ${#request.userPrincipal.principal.id}}">Editar Perfil</a>
 
@@ -41,7 +33,6 @@ NAVBAR /\
 <p>Email: <span>[[${#request.userPrincipal.principal.email}]]</span></p>
 
 <div sec:authorize="hasAuthority('Aluno')">
-
     <div th:if="${checagem} != 0 ">
 
         SEUS CERTIFICADOS:

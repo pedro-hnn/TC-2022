@@ -40,6 +40,7 @@ NAVBAR /\
 
 <div sec:authorize="hasAuthority('Aluno')">
     <div th:each="uc : ${UsuarioCurso}"><p><span th:text="${uc}"></span>% do curso concluído!</p></div>
+
     <div th:if="${UsuarioCurso == 100}">
         <script>
             alert("Parabéns! Você concluiu o curso! Vá até seu perfil para poder gerar seu certificado!");
