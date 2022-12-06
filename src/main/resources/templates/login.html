@@ -2,42 +2,53 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <style>
+        a {
+          color: black;
+          text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
-NAVBAR
-<br>
-<br>
-<a th:href="@{/registro}">Register</a>
-<a th:href="@{/login}">Login</a>
-<br>
-<br>
-NAVBAR
-<br>
+<div class="container">
+    <div class="content">
+        <header>
+            <div id="logo">
+                <a th:href="@{/}"><img src="/img/Ecode logo.png" alt="Ecode"></a>
+            </div>
+        </header>
 
+        <form id="formLogin" name="login" th:action="@{/login}" method="post">
+            <h2>Login</h2>
 
-<div th:if="${param.error}">
-    Email ou Senha inválidos!
+            <div th:if="${param.error}">
+                <h2>Email ou Senha inválidos!</h2>
+                <br><br><br>
+            </div>
+            <div th:if="${param.registrado}">
+                <h2>Registro realizado com sucesso!</h2>
+                <br><br><br>
+            </div>
+            <div th:if="${param.editado}">
+                <h2>Edição de Perfil feita com sucesso! Entre novamente na plataforma!</h2>
+                <br><br><br>
+            </div>
+
+            <input type="text" id="inputEmail" name="email" placeholder="EMAIL" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" >
+            <input type="password" id="inputPassword" name="password" placeholder="SENHA" required oninvalid="this.setCustomValidity('Preencha o campo de Senha!')" oninput="setCustomValidity('')">
+
+            <div class="buttonWrapper">
+                <button type="submit" id="btnLogin" class="btn" >Entrar</button>
+                <a th:href="@{/registro}" id="btnNewAccount" class="btn">Nova Conta</a>
+            </div>
+
+        </form>
+    </div>
+    <div class="hero"></div>
 </div>
-<div th:if="${param.registrado}">
-    Registro realizado com sucesso!
-</div>
-<div th:if="${param.editado}">
-    Edição de Perfil feita com sucesso! Entre novamente na plataforma!
-</div>
-
-
-
-<form name="login" th:action="@{/login}" method="post">
-    email:
-    <input id="username" type="text" name="email" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" >
-    <br>
-    senha:
-    <input id="password" type="password" name="password" required oninvalid="this.setCustomValidity('Preencha o campo de Senha!')" oninput="setCustomValidity('')">
-    <br>
-    <input type="submit" value="Entrar na plataforma">
-</form>
 
 </body>
 </html>

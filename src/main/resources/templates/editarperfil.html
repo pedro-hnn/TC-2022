@@ -3,62 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Edite seu Perfil</title>
+    <link rel="stylesheet" th:href="@{/css/styleForms.css}">
+    <style>
+        a {
+          color: black;
+          text-decoration: none;
+        }
+    </style>
+
 </head>
 <body>
 
 
 <div th:if="${#httpServletRequest.requestURI} == '/editar-perfil/' + ${#request.userPrincipal.principal.id}">
 
+        <header sec:authorize="hasAuthority('Administrador')" style="position:absolute;margin-bottom:-9.9em;">
+            <div>
+                <a th:href="@{/admin/cursos}"><img class="logo" style="width:60%;display:block;" src="/img/Ecode logo.png" alt="Ecode"></a>
+            </div>
+            <h2><a th:href="@{/admin/cursos}" >Lista de Cursos</a></h2>
+            <h2><a th:href="@{/admin/aulas}" >Lista de Aulas</a></h2>
+            <h2><a th:href="@{/admin/users}" >Lista de Usuários</a></h2>
+            <div style="display:flex;">
+                <a th:href="@{/perfil}" style="padding-right:1em;padding-top:1em;"><img style="width:38px;padding-top:1.5em;" class="logo" src="/img/Profile icon.png"></a>
+                <form th:action="@{/logout}" method="post"><input id="logoffadmin" type="submit" value=" "/></form>
+            </div>
+        </header>
 
-<br>
-<hr>
-<br>
-NAVBAR \/
-<br>
+        <header sec:authorize="hasAuthority('Aluno')" style="position:absolute;margin-bottom:-9.9em;">
+            <div>
+                <a th:href="@{/aluno/cursos}"><img class="logo" style="width:60%;display:block;"  src="/img/Ecode logo.png" alt="Ecode"></a>
+            </div>
+            <h2><a th:href="@{/aluno/cursos}" >Lista de Cursos</a></h2>
+            <div style="display:flex;">
+                <a th:href="@{/perfil}" style="padding-right:1em;padding-top:1em;"><img style="width:38px;padding-top:1.5em;" class="logo" src="/img/Profile icon.png"></a>
+                <form th:action="@{/logout}" method="post"><input id="logoffaluno" type="submit" value=" "/></form>
+            </div>
+        </header>
+    <div class="container">
+        <div class="content">
 
-<div sec:authorize="hasAuthority('Administrador')">
-    <div class="navbar-admin">
-        <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
-        <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
-        <a th:href="@{/admin/users}" >Lista de Usuários</a>
 
-        <a th:href="@{/perfil}">[[${#request.userPrincipal.principal.username}]]</a>
 
-        <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+
+<form id="formLogin" th:action="@{/salvar-edicao}" th:object="${Usuario}" method="post">
+    <h2>Editar Seu Perfil</h2>
+
+    <div th:if="${param.emailinvalido}">
+        Email já cadastrado na plataforma!
+        <br><br><br>
     </div>
-</div>
 
-<div sec:authorize="hasAuthority('Aluno')">
-    <div class="navbar-aluno">
-        <a th:href="@{/aluno/cursos}" >Lista de Cursos</a>
-        <a th:href="@{/perfil}" >Certificados</a>
-
-        <a th:href="@{/perfil}">[[${#request.userPrincipal.principal.username}]]</a>
-
-        <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
-    </div>
-</div>
-
-<br>
-NAVBAR /\
-<br>
-<hr>
-<br>
-
-<div th:if="${param.emailinvalido}">
-    Email já cadastrado na plataforma!
-</div>
-
-
-<form th:action="@{/salvar-edicao}" th:object="${Usuario}" method="post">
     <input type="hidden" th:field="*{id}"/>
-    EMAIL = <input type="email" th:field="*{email}" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" />
-    USERNAME = <input type="text" th:field="*{username}" required oninvalid="this.setCustomValidity('Preencha o campo de Username!')" oninput="setCustomValidity('')"/>
-    SENHA = <input type="password" th:field="*{senha}" required oninvalid="this.setCustomValidity('Preencha o campo de Senha!')" oninput="setCustomValidity('')"/>
 
-    <button type="submit">Atualizar Perfil</button>
+    <input type="email" id="inputEmail" th:field="*{email}" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" />
+    <input type="text" id="inputNome" th:field="*{username}" required oninvalid="this.setCustomValidity('Preencha o campo de Username!')" oninput="setCustomValidity('')"/>
+    <input type="password" id="inputPassword" placeholder="SENHA" th:field="*{senha}" required oninvalid="this.setCustomValidity('Preencha o campo de Senha!')" oninput="setCustomValidity('')"/>
+
+    <div class="buttonWrapper">
+        <button class="btn" id="btnLogin" type="submit">Atualizar Perfil</button>
+    </div>
 </form>
 
+    </div>
+    <div class="hero"></div>
+    </div>
 </div>
 
 </body>

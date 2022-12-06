@@ -4,61 +4,98 @@
 <head>
   <meta charset="UTF-8">
   <title>Lista de Aulas da Plataforma</title>
+  <link rel="stylesheet" th:href="@{/css/styleListas.css}">
+  <style>
+        a {
+          color: black;
+          text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
-NAVBAR \/
-<br>
-<div sec:authorize="hasAuthority('Administrador')">
-  <div class="navbar-admin">
-    <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
-    <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
-    <a th:href="@{/admin/users}" >Lista de Usuários</a>
-
-    <a th:href="@{/perfil}">[[${#request.userPrincipal.principal.username}]]</a>
-
-    <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+<header sec:authorize="hasAuthority('Administrador')">
+  <div>
+    <a th:href="@{/admin/cursos}"><img class="logo" src="/img/Ecode logo.png" alt="Ecode"></a>
   </div>
-</div>
-<br>
-NAVBAR /\
+  <div th:if="${vazio == 0}"><h2 style="margin-top:2em;"><a th:href="@{/admin/nova-aula}">Adicionar nova Aula</a></h2></div>
+  <h2><a th:href="@{/admin/cursos}" >Lista de Cursos</a></h2>
+  <h2><a th:href="@{/admin/users}" >Lista de Usuários</a></h2>
+  <div style="display:flex;">
+    <a th:href="@{/perfil}" style="padding-right:1em;padding-top:1em;"><img style="width:38px;padding-top:1.5em;" class="logo" src="/img/Profile icon.png"></a>
+    <form th:action="@{/logout}" method="post"><input type="submit" value=" " style="margin-right: 2em;"/></form>
+  </div>
+</header>
 
+<br><br><br>
+<div class="titulo"><h1>Listagem de Aulas</h1></div>
 
+<div class="mensagem">
 <div th:if="${vazio == 1}">
+  <br>
+  <br>
   Não há nenhum curso cadastrado na plataforma. Cadastre um curso antes de cadastrar uma nova aula!
+  <br>
+  <br>
+  <br>
+  <br>
 </div>
-
-<div th:if="${vazio == 0}">
-  <a th:href="@{/admin/nova-aula}">Adicionar nova Aula</a>
-</div>
-
 <div th:if="${param.save}">
+  <br>
+  <br>
   Aula salva com sucesso!
+  <br>
+  <br>
+  <br>
+  <br>
 </div>
 <div th:if="${param.delete}">
+  <br>
+  <br>
   Aula deletada com sucesso!
+  <br>
+  <br>
+  <br>
+  <br>
 </div>
 <div th:if="${param.saveerror}">
+  <br>
+  <br>
   Houve algum problema, não foi possível salvar Aula!
+  <br>
+  <br>
+  <br>
+  <br>
 </div>
 <div th:if="${param.deleteerror}">
+  <br>
+  <br>
   Houve algum problema, não foi possível deletar Aula!
+  <br>
+  <br>
+  <br>
+  <br>
+</div>
 </div>
 
+<table>
+  <thead>
+  <tr>
+    <th style="width:500px;">Aula</th>
+    <th style="width:500px;">Curso</th>
+    <th style="padding-left:0.5em;padding-right:0.5em;">Ações</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="aula : ${listaAulas}">
 
+    <td><a th:text="${aula.titulo}"  th:href="@{'/cursos/' + ${aula.fk_curso.id} + '/' + ${aula.id}}">titulo</a></td>
+    <td><a th:text="${aula.fk_curso.titulo}"  th:href="@{'/cursos/' + ${aula.fk_curso.id}}">titulo</a></td>
+    <td><a th:href="@{'/admin/editar-aula/' + ${aula.id}}"><img style="width:20px; padding-right:0.25em;" src="/img/pen-to-square-solid.svg"></a><a th:href="@{'/admin/deletar-aula/' + ${aula.id}}" onclick="return confirm('Tem certeza que deseja deletar essa Aula?')"><img style="width:20px;" src="/img/trash-can-solid.svg"></a></td>
 
-<div th:each="aula : ${listaAulas}">
-  <div>
-    <div>
-      <a th:href="@{'/cursos/' + ${aula.fk_curso.id} + '/' + ${aula.id}}" >página da aula</a>
-      <a th:href="@{'/admin/editar-aula/' + ${aula.id}}" >editar aula</a>
-      <a th:href="@{'/admin/deletar-aula/' + ${aula.id}}" onclick="return confirm('Tem certeza que deseja deletar essa Aula?')" >deletar aula</a>
-    </div>
-    TÍTULO DA AULA: <p th:text="${aula.titulo}" >Título</p>
-    CURSO RELACIONADO: <a th:href="@{'/cursos/' + ${aula.fk_curso.id}}" th:text="${aula.fk_curso.titulo}" >Título</a>
-  </div>
-</div>
-
+  </tr>
+  </tbody>
+</table>
 
 
 </body>

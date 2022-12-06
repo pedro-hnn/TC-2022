@@ -3,46 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>Seu Perfil</title>
+    <link rel="stylesheet" th:href="@{css/styleCourseIndex.css}">
+    <style>
+        a {
+          color: black;
+          text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
-<div sec:authorize="hasAuthority('Administrador')">
-    <div class="navbar-admin">
-        <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
-        <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
-        <a th:href="@{/admin/users}" >Lista de Usuários</a>
+<div class="container">
+    <div class="content">
 
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sair da Plataforma" />
-        </form>
-    </div>
-</div>
+            <header sec:authorize="hasAuthority('Administrador')">
+                <div>
+                    <a th:href="@{/admin/cursos}"><img class="logo" src="/img/Ecode logo.png" alt="Ecode"></a>
+                </div>
+                <h2><a th:href="@{/admin/cursos}" >Lista de Cursos</a></h2>
+                <h2><a th:href="@{/admin/aulas}" >Lista de Aulas</a></h2>
+                <h2><a th:href="@{/admin/users}" >Lista de Usuários</a></h2>
+                <div style="display:flex;">
+                    <a th:href="@{/perfil}" style="padding-right:1em;padding-top:1em;"><img style="width:38px;padding-top:1.5em;" class="logo" src="/img/Profile icon.png"></a>
+                    <form th:action="@{/logout}" method="post"><input type="submit" value=" "/></form>
+                </div>
+            </header>
 
-<div sec:authorize="hasAuthority('Aluno')">
-    <div class="navbar-aluno">
-        <a th:href="@{/aluno/cursos}" >Lista de Cursos</a>
-        <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
-    </div>
-</div>
+            <header sec:authorize="hasAuthority('Aluno')">
+                <div>
+                    <a th:href="@{/aluno/cursos}"><img class="logo" src="/img/Ecode logo.png" alt="Ecode"></a>
+                </div>
+                <h2><a th:href="@{/aluno/cursos}" >Lista de Cursos</a></h2>
+                <div style="display:flex;">
+                    <a th:href="@{/perfil}" style="padding-right:1em;padding-top:1em;"><img style="width:38px;padding-top:1.5em;" class="logo" src="/img/Profile icon.png"></a>
+                    <form th:action="@{/logout}" method="post"><input type="submit" value=" "/></form>
+                </div>
+            </header>
+        <div class="hero">
+            <div class="headerCourse" style="margin-left:auto;margin-right:auto;">
+                <img src="./img/userCircle.png" alt="Perfil">
+            </div>
+
+            <ul id="userData">
+                <li>
+                    <p class="btn" style="margin-left:auto;margin-right:auto;">[[${#request.userPrincipal.principal.username}]]</p>
+                </li>
+                <li>
+                    <p class="btn" style="margin-left:auto;margin-right:auto;">[[${#request.userPrincipal.principal.email}]]</p>
+                </li>
+            </ul>
 
 
 
-<a th:href="@{'/editar-perfil/'+ ${#request.userPrincipal.principal.id}}">Editar Perfil</a>
+            <div sec:authorize="hasAuthority('Aluno')">
+                <div th:if="${checagem} != 0 ">
+                    <br><br>
+                    <h2 style="padding-bottom:1em;margin: auto;text-align: center;">CERTIFICADOS</h2>
+                    <div th:each="curso : ${listaCursosConcluidos}">
+                        <a style="display:block;color: black;text-decoration: none;background-color:none;border:none;padding:none;background-color: transparent;text-align:center" th:href="@{'/cursos/' + ${curso.id} + '/certificado'}">
+                            <img class="logo" src="/img/Certificate icon.png" style="width:50px;margin: auto;">
+                            <h5 th:text="${curso.fk_curso.titulo}" >Título</h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-<p>Username: <span>[[${#request.userPrincipal.principal.username}]]</span></p>
-<p>Email: <span>[[${#request.userPrincipal.principal.email}]]</span></p>
+            <div class="wrapper-buttons">
+                <a th:href="@{'/editar-perfil/'+ ${#request.userPrincipal.principal.id}}" class="btn">Editar perfil</a>
+            </div>
 
-<div sec:authorize="hasAuthority('Aluno')">
-    <div th:if="${checagem} != 0 ">
-
-        SEUS CERTIFICADOS:
-        <div th:each="curso : ${listaCursosConcluidos}">
-            <br>
-            <hr>
-            <a th:href="@{'/cursos/' + ${curso.id} + '/certificado'}"><h5 th:text="${curso.fk_curso.titulo}" >Título</h5></a>
         </div>
     </div>
 </div>
+
+
+
 
 </body>
 </html>

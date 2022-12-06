@@ -1,0 +1,358 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    background: url("../img/Background.png") no-repeat center/cover;
+    font-family: sans-serif
+}
+img {
+    width: 100%;
+    display: block;
+}
+header{
+
+    display: flex;
+    justify-content: space-between;
+}
+header > h2{
+    margin-top:2em;
+}
+.logo {
+    width: 60%;
+    display: block;
+}
+input[type=submit] {
+    background: url("../img/Logoff icon.png") no-repeat center/cover;
+    border: 0;
+    display: block;
+    height: 32px;
+    width: 32px;
+    margin-top:3em;
+    cursor:pointer;
+}
+.btn {
+    background-color: black;
+    color: white;
+    border: 0;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    border-radius: 16px;
+    height: 56px;
+}
+
+.btn-black{
+    background-color: black !important;
+    color: white !important;
+    border: 2px solid black !important;
+}
+
+.btn-white{
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid black !important;
+}
+
+.container {
+    width: 100%;
+    max-width: 1920px;
+    display: flex;
+    margin: 0 auto;
+    height: 100vh; 
+}
+
+.content {
+    flex: 1;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.content header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 44px;
+}
+
+.content header #logo{
+    width: 100%;
+    max-width: 320px;
+}
+
+.content header > img{
+    width: 100%;
+    max-width: 44px;
+    object-fit: contain;
+}
+
+.hero {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.hero .headerCourse{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 240px;
+    width: 240px;
+    position: relative;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left:2em;
+}
+
+.hero .headerCourse:before {
+    content: "";
+    height:32px;
+    width: 32px;
+    position: absolute;
+    top: 40px;
+    right: 0;
+}
+
+.hero .headerCourse h2{
+    color: white;
+    font-size: 42px;
+}
+
+li{
+text-align:center;
+padding-left:25em;
+}
+
+.hero .wrapper-buttons{
+    width: 100%;
+    max-width: 1680px;
+    padding: 0 44px 80px;
+    display: flex; 
+    justify-content: flex-end;
+    margin-top: auto;
+}
+
+.hero a{
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+    padding-left: 68px;
+    padding-right: 68px;
+}
+
+.hero ul {
+    display: flex;   
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    width: 100%;
+    max-width: 640px;
+    list-style: none;
+    padding: 0;
+    margin: 32px 0 0 0;
+}
+
+.hero ul li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.hero ul li input{
+    display: flex;
+    margin-left: 8px;
+    background: white;
+    color: black;
+    border: 2px solid black
+}
+
+.hero ul li a.btn,
+.hero input.btn,
+.hero textarea.btn{
+    display: flex;
+    width: 420px;
+    background: white;
+    color: black;
+    border: 2px solid black;
+}
+
+.hero ul li label{
+    display: flex;
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 620px;
+}
+
+.hero ul li p.btn{
+   display: flex;
+    width: 420px;
+    margin-left: 8px;
+    background: white;
+    color: black;
+    border: 2px solid black ;
+}
+
+#userData {
+    align-items: flex-end;
+    width: auto;
+    transform: translateX(-100px);
+}
+
+#userData li{
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+#userData li label{
+    width: auto;
+}
+
+.hero .wrapperAulas h1{
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.hero .buttonsWrapper{
+    width: 100%;
+    max-width: 1480px;
+    margin-top: auto;
+    padding-bottom: 80px;
+    flex-direction: row;
+    justify-content: space-between;   
+}
+
+.hero .wrapperVideo{
+    border: 4px solid black;
+    background: black;
+}
+.hero .wrapper-nova-aula h1{
+    text-align: center;
+}
+
+.hero .wrapper-nova-aula div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.hero .wrapper-nova-aula div .label-novo-video{
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    font-size: 24px;
+    background: white;
+    color: black;
+    padding: 1rem;
+    gap: 1rem;
+    border-radius: 1rem;
+    border: 2px solid black;
+}
+
+
+.hero .wrapper-nova-aula div .label-novo-video img{
+    display: block;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.hero .wrapper-nova-aula div .input-novo-video{
+    display: none;
+}
+
+.hero .wrapper-nova-aula > div input.btn {
+    width: 100%;
+}
+
+.hero .wrapper-nova-aula > div textarea.btn {
+    width: 100%;
+    height: auto;
+}
+
+.hero .wrapper-nova-aula > div select.btn {
+    background: white;
+    width: 100%;
+    color: black;
+}
+
+.hero .wrapper-nova-aula > div{
+    display: flex;
+}
+
+.hero .wrapper-nova-aula input.btn{
+    display: inline-block;
+    width: 160px;
+    margin-top: 24px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+.hero .wrapper-lista-usuarios .table {
+    background: white;
+    width: 100%;
+}
+
+.hero .wrapper-lista-usuarios h1{
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.wrapper-lista-usuarios {
+    width: 100%;
+    max-width: 1400px;
+
+}
+
+table{
+    width: 100%;
+    max-width: 1400px;
+    border-collapse: collapse; 
+}
+
+table th,
+table td{
+    background: white;
+    color: black;
+    border: 2px solid black;
+    padding: .8rem;
+    border-collapse: collapse; 
+}
+
+table th{
+    text-transform: uppercase;
+}
+
+table td button {
+    border: 0;
+    background: transparent;
+    width: 24px; 
+    height: 24px;
+}
+
+table td button + button {
+    margin-left: 1rem;
+}

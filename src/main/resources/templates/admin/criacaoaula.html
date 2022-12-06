@@ -3,60 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Criar nova Aula</title>
+    <link rel="stylesheet" th:href="@{/css/styleForms.css}">
+    <style>
+        a {
+          color: black;
+          text-decoration: none;
+        }
+    </style>
 </head>
-<body>
+<body style="background: url('../img/Blurred background.png') no-repeat center/cover;">
 
-<br>
-<hr>
-<br>
-NAVBAR \/
-<br>
-<div sec:authorize="hasAuthority('Administrador')">
-    <div class="navbar-admin">
-        <a th:href="@{/admin/cursos}" >Lista de Cursos</a>
-        <a th:href="@{/admin/aulas}" >Lista de Aulas</a>
-        <a th:href="@{/admin/users}" >Lista de Usuários</a>
-
-        <a th:href="@{/perfil}">[[${#request.userPrincipal.principal.username}]]</a>
-
-        <form th:action="@{/logout}" method="post"><input type="submit" value="Sair da Plataforma" /></form>
+<header sec:authorize="hasAuthority('Administrador')" >
+    <div>
+        <a th:href="@{/admin/cursos}"><img class="logo" style="width:60%;display:block;" src="/img/Ecode logo.png" alt="Ecode"></a>
     </div>
-</div>
-<br>
-NAVBAR /\
-<br>
-<hr>
-<br>
+    <h2><a th:href="@{/admin/cursos}" >Lista de Cursos</a></h2>
+    <h2><a th:href="@{/admin/aulas}" >Lista de Aulas</a></h2>
+    <h2><a th:href="@{/admin/users}" >Lista de Usuários</a></h2>
+    <div style="display:flex;">
+        <a th:href="@{/perfil}" style="padding-right:1em;padding-top:1em;"><img style="width:38px;padding-top:1.5em;" class="logo" src="/img/Profile icon.png"></a>
+        <form th:action="@{/logout}" method="post"><input id="logoffadmin" type="submit" value=" "/></form>
+    </div>
+</header>
 
 <form action="#" th:action="@{/admin/salvar-aula}" th:object="${Aulas}" method="post" id="aula-form" enctype="multipart/form-data">
-    <input type="hidden" form="aula-form" th:field="*{id}" />
-    titulo da aula
-    <input type="text" form="aula-form" th:field="*{titulo}" placeholder="Título" required oninvalid="this.setCustomValidity('Preencha o título da Aula!')" oninput="setCustomValidity('')"/>
-    <br>
-    <br>
-    <br>
-    descrição da aula
-    <textarea form="aula-form" th:field="*{descricao}" placeholder="Digite sua descrição aqui" rows="4" required oninvalid="this.setCustomValidity('Preencha a descrição da Aula!')" oninput="setCustomValidity('')"></textarea
-    >
-    <br>
-    <br>
-    <br>
-    <br>
-    link do vídeo da aula
-    <input type="file" name="video_aula" accept="video/*" required oninvalid="this.setCustomValidity('Adicione o vídeo da Aula!')" oninput="setCustomValidity('')">
-    <br>
-    <br>
-    <br>
-    <br>
-    Selecione o curso da aula
+
+    <h2 style="padding-top: 1em;">Formulário de Aula</h2>
+
     <select th:field="*{fk_curso}" form="aula-form" >
         <option th:each="curso : ${listaCursos}" th:value="${curso.id}"><p th:text="${curso.titulo}"></p></option>
     </select>
-    <br>
-    <br>
-    <br>
-    <br>
-    <input type="submit" value="Salvar Aula" >
+
+    <input type="hidden" form="aula-form" th:field="*{id}" />
+
+    <input type="text" form="aula-form" th:field="*{titulo}" placeholder="TÍTULO DA AULA" required oninvalid="this.setCustomValidity('Preencha o título da Aula!')" oninput="setCustomValidity('')"/>
+
+    <textarea form="aula-form" th:field="*{descricao}" placeholder="DESCRIÇÃO DA AULA" rows="4" required oninvalid="this.setCustomValidity('Preencha a descrição da Aula!')" oninput="setCustomValidity('')"></textarea
+    >
+
+    <h2>Vídeo da Aula</h2>
+    <input style="background-color: white;width: 70%;margin-left: 15%;" type="file" name="video_aula" placeholder="VÍDEO DA AULA" accept="video/*" required oninvalid="this.setCustomValidity('Adicione o vídeo da Aula!')" oninput="setCustomValidity('')">
+
+
+
+    <input style="width: 50%;margin: auto;margin-bottom:2em;" type="submit" class="btn" value="Salvar Aula" >
 
 </form>
 

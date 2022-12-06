@@ -3,19 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Plataforma Cursos Online</title>
+    <link rel="stylesheet" th:href="@{css/styleIndex.css}">
+    <style>
+        a {
+          color: black;
+          text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
-NAVBAR
-<br>
-<br>
-<a th:href="@{/registro}">Register</a>
-<a th:href="@{/login}">Login</a>
-<br>
-<br>
-NAVBAR
-<br>
+<div class="container">
+    <div class="content">
 
+        <header >
+            <div id="logo">
+                <a th:href="@{/}"><img src="/img/Ecode logo.png" alt="Ecode"></a>
+            </div>
+            <h2 style="margin-top: 1.5em;"><a th:href="@{/login}">Login</a></h2>
+            <h2 style="margin-top: 1.5em;"><a th:href="@{/registro}">Registre-se</a></h2>
+        </header>
+
+        <div>
+            <br><br><br>
+            <h1 style="padding-left:4em;"><b>Quem Somos</b></h1>
+            <br><br>
+            <h2>ECODE</h2>
+            <br>
+            <p>Somos uma plataforma dedicada a ONG jovens ambientalistas que tem o intuito de disponibilizar ensino profissionalizante e educação ambiental aos jovens e adultos de comunidades carentes, para que assim haja um desenvolvimento social e profissional dos mesmos.</p>
+            <br>
+            <p>Em conjunto com a ONG visamos abranger principalmente o público mais jovem destas comunidades já que este é o grupo mais vulnerável a exclusão social de modo geral.</p>
+            <br>
+            <p>O processo de aprendizagem ajudará estes jovens e adultos amparados pela ONG a criar e desenvolver brinquedos totalmente sustentáveis que tem como objetivo por meio do artesanato oferecer até uma pequena fonte de renda e a capacitação profissional na área.</p>
+            <br><br>
+            <h2>Nossa Missão<br></h2>
+            <br>
+            <p>Garantir o amparo a sociedade e a conscientização do cuidade e importância do meio ambiente.</p>
+        </div>
+
+
+    </div>
+    <div class="hero">
+        <div></div>
+    </div>
+</div>
 
 </body>
 </html>

@@ -3,35 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Registre-se</title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
+    <style>
+        a {
+          color: black;
+          text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
-NAVBAR
-<br>
-<br>
-<a th:href="@{/registro}">Register</a>
-<a th:href="@{/login}">Login</a>
-<br>
-<br>
-NAVBAR
-<br>
+<div class="container">
+    <div class="content">
+        <header>
+            <div id="logo">
+                <a th:href="@{/}"><img src="/img/Ecode logo.png" alt="Ecode"></a>
+            </div>
+        </header>
 
-<div th:if="${param.emailinvalido}">
-    Email já cadastrado na plataforma!
+
+        <form id="formLogin" th:action="@{/salvar-registro}" th:object="${Usuario}" method="post">
+            <h2>Crie sua Conta</h2>
+            <br>
+            <p style="padding-bottom:2em;">Já possui uma conta?<span>   <a th:href="@{/login}">Login</a></span></p>
+
+            <div th:if="${param.emailinvalido}">
+                Email já cadastrado na plataforma!
+                <br><br><br>
+            </div>
+
+            <input type="email" id="inputEmail" placeholder="EMAIL" th:field="*{email}" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" />
+            <input type="text" id="inputNome" placeholder="USERNAME" th:field="*{username}" required oninvalid="this.setCustomValidity('Preencha o campo de Username!')" oninput="setCustomValidity('')"/>
+            <input type="password" id="inputPassword" placeholder="SENHA" th:field="*{senha}" required oninvalid="this.setCustomValidity('Preencha o campo de Senha!')" oninput="setCustomValidity('')"/>
+
+
+            <div class="buttonWrapper">
+                <button type="submit" id="btnLogin" class="btn" >Se registrar</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="hero"></div>
 </div>
-
-<form th:action="@{/salvar-registro}" th:object="${Usuario}" method="post">
-    email:
-    <input type="email" th:field="*{email}" required oninvalid="this.setCustomValidity('Preencha o campo de Email!')" oninput="setCustomValidity('')" />
-    <br>
-    username:
-    <input type="text" th:field="*{username}" required oninvalid="this.setCustomValidity('Preencha o campo de Username!')" oninput="setCustomValidity('')"/>
-    <br>
-    senha:
-    <input type="password" th:field="*{senha}" required oninvalid="this.setCustomValidity('Preencha o campo de Senha!')" oninput="setCustomValidity('')"/>
-
-    <button type="submit" >Se registrar</button>
-</form>
 
 </body>
 </html>

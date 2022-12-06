@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Controller
@@ -149,12 +150,26 @@ public class Controller {
 
         Usuarios user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         List<UsuarioCurso> listaCursos = serviceUC.findByUsuario(user.getId());
+        List<UsuarioCurso> listaCertificados = new ArrayList<>();
         if(listaCursos.isEmpty()){
             model.addAttribute("checagem", 0);
         }else{
-            model.addAttribute("checagem", 1);
+            for (UsuarioCurso uc : listaCursos) {
+                if(!uc.getBool_libera_certificado()){
+                    if(uc.getPorcentagem_aulas_assistidas() >= 100){
+                        uc.setBool_libera_certificado(true);
+                        serviceUC.save(new UsuarioCurso(uc.getId(),uc.getBool_libera_certificado(),100,uc.getQuantidade_aulas(),uc.getLista_aulas_assistidas(),uc.getFk_curso(),user));
+                        listaCertificados.add(uc);
+                    }
+                }else{
+                    listaCertificados.add(uc);
+                }
+            }
+            if(!listaCertificados.isEmpty()){
+                model.addAttribute("checagem", 1);
+            }
         }
-        model.addAttribute("listaCursosConcluidos", listaCursos);
+        model.addAttribute("listaCursosConcluidos", listaCertificados);
 
 
         return "perfil";

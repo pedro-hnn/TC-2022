@@ -1,0 +1,65 @@
+*{
+font-family: sans-serif;
+
+}
+body{
+    overflow-x: hidden;
+}
+table{
+    margin-left:auto;
+    margin-right:auto;
+    border-collapse:collapse;
+    background-color:white;
+}
+th{
+    font-size:25px;
+    font-weight:bold;
+    border:3px solid black;
+    text-align:center;
+}
+td{
+    border: 3px solid black;
+    text-align:center;
+    padding-top:0.25em;
+    padding-bottom:0.25em;
+}
+
+body{
+    background: url("../img/Blurred background.png") center/cover !important;
+    -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+}
+.titulo, .mensagem{
+    text-align:center;
+    margin-left:auto;
+    mergin-right:auto;
+}
+.logo {
+    width: 60%;
+    display: block;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+}
+header > h2{
+    margin-top:2em;
+}
+
+input[type=submit] {
+    background: url("../img/Logoff icon.png") no-repeat center/cover;
+    border: 0;
+    display: block;
+    height: 32px;
+    width: 32px;
+    margin-top:3em;
+    cursor:pointer;
+}
+
+
+.titulo{
+padding-bottom:2em;
+}
+
